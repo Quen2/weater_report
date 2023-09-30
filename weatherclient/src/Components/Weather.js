@@ -38,11 +38,8 @@ export default function Weather ({weather})
     function changeDate(date) 
     {
         const newDate = new Date(date).toLocaleString('fr-FR', {
-            year : "numeric",
-            month : "long",
-            day : '2-digit',
-            hour : "2-digit",
-            minute : "2-digit"
+            month : 'short',
+            day : 'numeric'
          })  
        return newDate; 
     }
@@ -55,22 +52,21 @@ export default function Weather ({weather})
 
     return (
 
-        <div className="flex">
+        <div className="flex border w-screen h-screen justify-center items-center">
             {
                 weather ?
-                <div className="flex">
-                    <div>
+                <div className="flex flex-col border gap-10">
+                    <div className="border text-center">
                         <p>{changeDate(weather.current_weather.time)}</p>
                         <p>Température : {weather.current_weather.temperature}°</p>
                         <p>{getWeatherCode(weather.current_weather.weathercode)}</p>
                     </div>
-                    <div>
+                    <div className="border flex">
                         {
                             weather.daily.time.map((value, index) => (
-                                <div key={index} className="flex">
-                                    <p>Temps : {changeDate(value)}</p>
-                                    <p>Température : {Math.round(weather.daily.temperature_2m_min[index])}°</p>
-                                    <p> -  {Math.round(weather.daily.temperature_2m_max[index])}°</p>
+                                <div key={index} className="flex flex-col text-center">
+                                    <p>{changeDate(value)}</p>
+                                    <p>{Math.round(weather.daily.temperature_2m_min[index])}° - {Math.round(weather.daily.temperature_2m_max[index])}°</p>
                                     <p> {getWeatherCode(weather.daily.weathercode[index])} </p>
                                 </div>
                             ))      

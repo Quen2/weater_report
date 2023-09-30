@@ -24,7 +24,6 @@ export default function Homepage ()
 
     return (
         <div>
-            <p className="bg-gray-400">Weather_Report</p>
             <Weather weather={weather} ></Weather>
         </div>
     )
