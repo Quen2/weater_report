@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Weather ({weater})
+export default function Weather ({weather})
 {
 
     const weatherCode = {
@@ -33,15 +33,17 @@ export default function Weather ({weater})
         96: 'Orage avec grêle légère',
         99: 'Orage avec grêle forte'
     };
-    
+
 
     function changeDate(date) 
     {
-       const newDate = new Date(date).toLocaleString('fr-FR', {
-          year : "numeric",
-          month : "long",
-          day : "numeric"
-       })  
+        const newDate = new Date(date).toLocaleString('fr-FR', {
+            year : "numeric",
+            month : "long",
+            day : '2-digit',
+            hour : "2-digit",
+            minute : "2-digit"
+         })  
        return newDate; 
     }
 
@@ -55,44 +57,25 @@ export default function Weather ({weater})
 
         <div className="flex">
             {
-                weater ?
+                weather ?
                 <div className="flex">
                     <div>
+                        <p>{changeDate(weather.current_weather.time)}</p>
+                        <p>Température : {weather.current_weather.temperature}°</p>
+                        <p>{getWeatherCode(weather.current_weather.weathercode)}</p>
+                    </div>
+                    <div>
                         {
-                            weater.time.map((value, index) => (
-                                <div key={index}>
+                            weather.daily.time.map((value, index) => (
+                                <div key={index} className="flex">
                                     <p>Temps : {changeDate(value)}</p>
+                                    <p>Température : {Math.round(weather.daily.temperature_2m_min[index])}°</p>
+                                    <p> -  {Math.round(weather.daily.temperature_2m_max[index])}°</p>
+                                    <p> {getWeatherCode(weather.daily.weathercode[index])} </p>
                                 </div>
-                            ))
+                            ))      
                         }
-                    </div>
-                    <div>
-                    {
-                        weater.temperature_2m_min.map((value, index) => (
-                            <div key={index}>
-                                <p>Température : {value}°</p>
-                            </div>
-                        ))                    
-                    }
-                    </div>
-                    <div>
-                    {
-                        weater.temperature_2m_max.map((value, index) => (
-                            <div key={index}>
-                                <p> -  {value}°</p>
-                            </div>
-                        ))                    
-                    }
-                    </div>
-                    <div>
-                    {
-                        weater.weathercode.map((value, index) => (
-                            <div key={index}>
-                                <p> {getWeatherCode(value)} </p>
-                            </div>
-                        ))                    
-                    }
-                    </div>                  
+                    </div>   
                 </div>
                 : null
             }
