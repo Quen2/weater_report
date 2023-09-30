@@ -12,6 +12,28 @@ code {
     monospace;
 }
 
+.leaflet-container {
+  height: 250px;
+  width: 150px;
+  margin: 0 auto 0 auto;
+}
+
+@media (min-width: 768px) {
+  .leaflet-container {
+    height: 300px;
+    width: 300px;
+    margin: 0 auto 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .leaflet-container {
+    height: 400px;
+    width: 400px;
+    margin: 0 auto 0 auto;
+  }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-export default function DetailedWeather ({date})
+export default function DetailedWeather ({date, currentHour})
 {
 
     const [WeatherPerHours, setWeatherPerHours] = useState(null);
@@ -12,7 +12,6 @@ export default function DetailedWeather ({date})
             navigator.geolocation.getCurrentPosition((position) => {
                 axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&hourly=temperature_2m,weathercode&start_date=${date}&end_date=${date}&precipitation_unit=inch&timezone=auto&models=best_match`)
                 .then((result) => {
-                    console.log(result.data.hourly);
                     setWeatherPerHours(result.data.hourly)
                 })
                 .catch((error) => {
@@ -77,14 +76,14 @@ export default function DetailedWeather ({date})
     }
 
     return (
-        <div className="flex justify-evenly">
+        <div className="flex overflow-x-scroll md:overflow-hidden md:justify-evenly w-full">
             {
                 WeatherPerHours ?
                 WeatherPerHours.time.map((value, index) => (
                     <div key={index} className="flex">
                         {
-                            getHour(value) %2 === 0 ? 
-                            <div>
+                            getHour(value) %2 === 0 && getHour(value) > getHour(currentHour) ? 
+                            <div className="border w-[150px]">
                                 <p>{changeDate(value)}</p>
                                 <p>{WeatherPerHours.temperature_2m[index]}°</p>
                                 <p>{getWeatherCode(WeatherPerHours.weathercode[index])}</p>
