@@ -82,8 +82,8 @@ export default function DetailedWeather ({date, currentHour})
                 WeatherPerHours.time.map((value, index) => (
                     <div key={index} className="flex">
                         {
-                            getHour(value) %2 === 0 && getHour(value) > getHour(currentHour) ? 
-                            <div className="border w-[150px]">
+                            getHour(value) %2 === 0 ? 
+                            <div className="border w-[120px]">
                                 <p>{changeDate(value)}</p>
                                 <p>{WeatherPerHours.temperature_2m[index]}°</p>
                                 <p>{getWeatherCode(WeatherPerHours.weathercode[index])}</p>
