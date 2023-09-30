@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import DetailedWeather from "./DetailedWeather";
+import {MapContainer, TileLayer, Marker} from "react-leaflet"
 
-export default function Weather ({weather})
+
+export default function Weather ({weather, lat , lon})
 {
 
     const [dateToLookForWeather, setDateToLookForWeather] = useState(null)
@@ -75,15 +77,15 @@ export default function Weather ({weather})
 
         <div className="w-screen h-screen">
             {
-                weather ?
-                <div className="flex">
-                    <div className="text-black w-1/2 md:w-5/6 ml-auto fixed top-0 right-0 p-3 bg-slate-500 text-center">
+                weather && lat && lon ?
+                <div className="flex flex-col h-full">
+                    <div className="text-black p-3 bg-slate-500 text-center">
                         <p>Weather_Look_up</p>
                     </div>
-                    <div className="flex flex-col justify-evenly h-screen bg-slate-500 p-3 w-1/2 md:w-1/6">
+                    <div className="flex flex-col md:flex-row justify-evenly bg-slate-500 p-3">
                         {
                             weather.daily.time.map((value, index) => (
-                                <div key={index} className="flex flex-col text-center border cursor-pointer" onClick={(event) => {setDateToLookForWeather(value)}}>
+                                <div key={index} className="flex flex-row justify-evenly md:flex-col text-center border cursor-pointer md:w-[14.2857142857%] hover:bg-slate-700 hover:scale-105 " onClick={(event) => {setDateToLookForWeather(value)}}>
                                     <p>{changeDate(value)}</p>
                                     <p>{Math.round(weather.daily.temperature_2m_min[index])}° - {Math.round(weather.daily.temperature_2m_max[index])}°</p>
                                     <p> {getWeatherCode(weather.daily.weathercode[index])} </p>
@@ -91,13 +93,22 @@ export default function Weather ({weather})
                             ))      
                         }
                     </div>
-                    <div className="text-center h-fit self-center w-1/2 md:w-fit mx-auto border p-4">
-                        <p>{changeCurrentDate(weather.current_weather.time)}</p>
-                        <p>Température : {weather.current_weather.temperature}°</p>
-                        <p>{getWeatherCode(weather.current_weather.weathercode)}</p>
+                    <div className="text-center w-3/4 mx-auto p-4">
+                        <div className="border mb-8">
+                            <p>{changeCurrentDate(weather.current_weather.time)}</p>
+                            <p>Température : {weather.current_weather.temperature}°</p>
+                            <p>{getWeatherCode(weather.current_weather.weathercode)}</p>
+                        </div>
+                        <MapContainer center={[lat, lon]} zoom={16}>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            <Marker position={[lat, lon]} />
+                        </MapContainer>
                     </div>
-                    <div className="text-black w-1/2 md:w-5/6 ml-auto fixed bottom-0 right-0 p-3 bg-slate-500">
-                        <DetailedWeather date={dateToLookForWeather} />
+                    <div className="text-black fixed bottom-0 w-full p-3 bg-slate-500">
+                        <DetailedWeather date={dateToLookForWeather} currentHour={weather.current_weather.time} />
                     </div>
                 </div>
                 : null
