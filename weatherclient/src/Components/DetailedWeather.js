@@ -39,34 +39,35 @@ export default function DetailedWeather ({date, currentHour})
     }
 
     const weatherCode = {
-        0: 'Ciel dégagé',
-        1: 'Principalement dégagé',
-        2: 'Partiellement nuageux',
-        3: 'Ciel couvert',
-        45: 'Brouillard avec dépôt de givre',
-        48: 'Brouillard avec dépôt de givre',
-        51: 'Bruine : Légère intensité',
-        53: 'Bruine : Intensité modérée',
-        55: 'Bruine : Intensité dense',
-        56: 'Bruine verglaçante : Légère intensité',
-        57: 'Bruine verglaçante : Intensité dense',
-        61: 'Pluie : Légère intensité',
-        63: 'Pluie : Intensité modérée',
-        65: 'Pluie : Forte intensité',
-        66: 'Pluie verglaçante : Légère intensité',
-        67: 'Pluie verglaçante : Forte intensité',
-        71: 'Chute de neige : Légère intensité',
-        73: 'Chute de neige : Intensité modérée',
-        75: 'Chute de neige : Forte intensité',
-        77: 'Grésil',
-        80: 'Averses de pluie : Légère intensité',
-        81: 'Averses de pluie : Intensité modérée',
-        82: 'Averses de pluie : Violente intensité',
-        85: 'Averses de neige : Légère intensité',
-        86: 'Averses de neige : Forte intensité',
-        95: 'Orage : Légère ou modérée intensité',
-        96: 'Orage avec grêle légère',
-        99: 'Orage avec grêle forte'
+        0: '☀️',
+        1: '🌤️',
+        2: '⛅',
+        3: '☁️',
+        45: '🌫️',
+        48: '🌫️',
+        51: '🌫️',
+        53: '🌫️',
+        55: '🌫️',
+        56: '🌫️',
+        57: '🌫️',
+        61: '🌧️',
+        63: '🌧️',
+        65: '🌧️',
+        66: '🌧️',
+        67: '🌧️',
+        71: '🌨️',
+        73: '🌨️',
+        75: '🌨️',
+        77: '🌨️',
+        80: '🌧️',
+        81: '🌧️',
+        82: '🌧️',
+        85: '🌧️',
+        86: '🌧️',
+        95: '🌩️',
+        96: '⛈️',
+        99: '⛈️',
+        100 : '🌕'
     };
 
     function getWeatherCode(code)
@@ -83,10 +84,18 @@ export default function DetailedWeather ({date, currentHour})
                     <div key={index} className="flex">
                         {
                             getHour(value) %2 === 0 ? 
-                            <div className="border w-[120px]">
-                                <p>{changeDate(value)}</p>
-                                <p>{WeatherPerHours.temperature_2m[index]}°</p>
-                                <p>{getWeatherCode(WeatherPerHours.weathercode[index])}</p>
+                            <div className="w-[120px] text-center">
+                                <div className="flex justify-evenly">
+                                    <p>{changeDate(value)}</p>
+                                    <p>{WeatherPerHours.temperature_2m[index]}°</p>
+                                </div>
+                                {
+                                    WeatherPerHours.weathercode[index] === 0 && (Number(getHour(value)) <= 8 || Number(getHour(value)) >= 20) 
+                                    ?
+                                    <p className="text-3xl">{getWeatherCode(100)}</p>
+                                    :
+                                    <p className="text-3xl">{getWeatherCode(WeatherPerHours.weathercode[index])}</p>
+                                }
                             </div>
                             : null
                         }
