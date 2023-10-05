@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-export default function DetailedWeather ({date, currentHour})
+export default function DetailedWeather ({date})
 {
 
     const [WeatherPerHours, setWeatherPerHours] = useState(null);

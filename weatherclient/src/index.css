@@ -20,7 +20,7 @@ code {
 
 @media (width < 770px) {
   .leaflet-container {
-    height : 100%;
+    height : 100px;
     width : 100%;
     margin: 0 auto 0 auto
   }
@@ -28,7 +28,7 @@ code {
 
 @media (height < 750px) {
   .leaflet-container {
-    height: 50% ;
+    height: 50px ;
     width: 100% ;
     margin: auto 0 auto 0;
   }
