@@ -8,7 +8,7 @@ export default function Weather ({weather, lat , lon})
 
     const [dateToLookForWeather, setDateToLookForWeather] = useState(null)
     const [actualWeather , setActualWeather] = useState(weather)
-    const [city, setCity] = useState(null);
+    const [city, setCity] = useState('Paris');
     const [latitude, setLatitude] = useState(lat);
     const [longitude, setLongitude] = useState(lon);
     const [actualCity, setActualCity] = useState(null);
@@ -18,7 +18,7 @@ export default function Weather ({weather, lat , lon})
         {
             setDateToLookForWeather(actualWeather.daily.time[0])
         }
-    },[actualWeather])
+        },[actualWeather])
 
     useEffect(() => {
         axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min&current_weather=true&precipitation_unit=inch&timezone=auto&models=best_match`)
@@ -136,13 +136,13 @@ export default function Weather ({weather, lat , lon})
                             <p className="text-3xl">{getWeatherCode(actualWeather.current_weather.weathercode)}</p>
                         </div>
                         <div className="flex flex-col md:flex-row">
-                            <form onSubmit={(e) => {getLatAndLong(e)}} className="flex flex-col gap-4 justify-center">
+                            <form className="flex flex-col gap-4 justify-center">
                                 <input 
                                     onChange={(e) => {setCity(e.target.value)}}
                                     placeholder="Ville à rechercher"
                                     className="text-center border"
                                 />
-                                <button type="submit" className="border">Rechercher</button>
+                                <button type="submit" className="border" onClick={(e) => {getLatAndLong(e)}}>Rechercher</button>
                             </form>
                             <MapContainer center={[latitude, longitude]} zoom={5}>
                                 <TileLayer
