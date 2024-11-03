@@ -108,17 +108,17 @@ export default function Weather ({weather, lat , lon})
 
     return (
 
-        <div className="w-screen h-screen">
+        <div className="w-screen h-screen text-white bg-[#1C1C1C]">
             {
                 actualWeather && lat && lon ?
                 <div className="flex flex-col h-full">
-                            <div className="text-black w-full border bg-blue-100 text-center">
+                            <div className="text-white w-full bg-[#181818] text-center">
                                 <p>Weather_Look_up</p>
                             </div>
                     <div className="flex flex-col md:flex-row justify-evenly p-3">
                         {
                             actualWeather.daily.time.map((value, index) => (
-                                <div key={index} className="flex flex-col justify-evenly md:flex-col text-center border cursor-pointer md:w-[14.2857142857%] hover:bg-blue-100 hover:scale-105 " onClick={(event) => {setDateToLookForWeather(value)}}>
+                                <div key={index} className="flex flex-col justify-evenly md:flex-col text-center border cursor-pointer md:w-[14.2857142857%] hover:bg-[#181818] hover:scale-105 " onClick={(event) => {setDateToLookForWeather(value)}}>
                                     <div className="flex md:flex-col justify-center gap-8 md:gap-0">
                                         <p>{changeDate(value)}</p>
                                         <p className="text-3xl"> {getWeatherCode(actualWeather.daily.weathercode[index])} </p>
@@ -128,7 +128,7 @@ export default function Weather ({weather, lat , lon})
                             ))      
                         }
                     </div>
-                    <div className="text-center w-3/4 mx-auto p-4">
+                    <div className="text-center w-full md:w-3/4 mx-auto p-4 bg-[#1C1C1C]">
                         <div className="border mb-8">
                             <p>{actualCity}</p>
                             <p>{changeCurrentDate(actualWeather.current_weather.time)}</p>
@@ -140,11 +140,12 @@ export default function Weather ({weather, lat , lon})
                                 <input 
                                     onChange={(e) => {setCity(e.target.value)}}
                                     placeholder="Ville à rechercher"
-                                    className="text-center border"
+                                    className="text-center bg-[#181818]"
                                 />
-                                <button type="submit" className="border" onClick={(e) => {getLatAndLong(e)}}>Rechercher</button>
+                                <button type="submit" className="bg-[#181818]" onClick={(e) => {getLatAndLong(e)}}>Rechercher</button>
                             </form>
-                            <MapContainer center={[latitude, longitude]} zoom={5}>
+                            <MapContainer center={[latitude, longitude]} zoom={10}
+                            style={{ height: 280, width: "100%" }}>
                                 <TileLayer
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
@@ -152,7 +153,7 @@ export default function Weather ({weather, lat , lon})
                             </MapContainer>
                         </div>
                     </div>
-                    <div className="text-black fixed bottom-0 w-full p-3 bg-blue-200">
+                    <div className="text-white md:fixed bottom-0 w-full p-3 bg-[#181818]">
                         <DetailedWeather date={dateToLookForWeather} />
                     </div>
                 </div>

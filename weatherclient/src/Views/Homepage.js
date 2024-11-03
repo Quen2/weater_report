@@ -47,14 +47,14 @@ export default function Homepage ()
     }
 
     return (
-        <div>
+        <div className="bg-[#1C1C1C]">
             {
                 weather ? 
                 <Weather weather={weather} lat={latitude} lon={longitude} ></Weather>
                 :
-                <div>
+                <div className="text-white">
                     <Header />
-                    <div className="bg-blue-100 flex text-center w-screen h-screen items-center justify-center">
+                    <div className="bg-[#1C1C1C] flex text-center w-screen h-screen items-center justify-center">
                         {
                             accepted ? 
                             <div>
@@ -63,8 +63,8 @@ export default function Homepage ()
                             :
                             <div>
                                 <p>Ce site demande votre position afin de récupérer efficacement les données météorologiques autour de vous </p>
-                                <p className="border p-2 cursor-pointer w-fit mx-auto hover:bg-blue-200 hover:scale-105" onClick={acceptLocation}>Accepter ?</p>
-                                <p className="border p-2 cursor-pointer w-fit mx-auto hover:bg-blue-200 hover:scale-105" onClick={refuseLocation}>Refuser</p>
+                                <p className="w-1/3 p-2 cursor-pointer mx-auto hover:bg-[#181818] hover:scale-105" onClick={acceptLocation}>Accepter ?</p>
+                                <p className="w-1/3 p-2 cursor-pointer mx-auto hover:bg-[#181818] hover:scale-105" onClick={refuseLocation}>Refuser</p>
                             </div>
                         }
                     </div>
